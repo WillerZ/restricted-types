@@ -12,11 +12,11 @@ constexpr inline LinePrice operator*(Price left, Quantity right);
 constexpr inline TotalPrice operator+(LinePrice left, LinePrice right);
 constexpr inline TotalPrice operator+(TotalPrice left, LinePrice right);
 constexpr inline TotalPrice operator+(LinePrice left, TotalPrice right);
-constexpr inline TotalPrice &operator+=(TotalPrice &left, LinePrice right);
-constexpr inline Quantity &operator++(Quantity &qty);
-constexpr inline Quantity operator++(Quantity &qty, int);
-constexpr inline Quantity &operator--(Quantity &qty);
-constexpr inline Quantity operator--(Quantity &qty, int);
+constexpr inline TotalPrice& operator+=(TotalPrice& left, LinePrice right);
+constexpr inline Quantity& operator++(Quantity& qty);
+constexpr inline Quantity operator++(Quantity& qty, int);
+constexpr inline Quantity& operator--(Quantity& qty);
+constexpr inline Quantity operator--(Quantity& qty, int);
 
 // First test failure might be fixable if something like this were legal:
 //

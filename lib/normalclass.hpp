@@ -21,10 +21,10 @@ struct Quantity {
   constexpr explicit Quantity(unsigned underlying) noexcept;
   constexpr explicit operator unsigned() noexcept;
   operator Price() = delete;
-  Quantity &operator++(this Quantity &self);
-  Quantity operator++(this Quantity &self, int);
-  Quantity &operator--(this Quantity &self);
-  Quantity operator--(this Quantity &self, int);
+  Quantity& operator++(this Quantity& self);
+  Quantity operator++(this Quantity& self, int);
+  Quantity& operator--(this Quantity& self);
+  Quantity operator--(this Quantity& self, int);
 
 private:
   unsigned underlying_{0};
@@ -64,7 +64,7 @@ constexpr inline LinePrice operator*(Price left, Quantity right);
 constexpr inline TotalPrice operator+(LinePrice left, LinePrice right);
 constexpr inline TotalPrice operator+(TotalPrice left, LinePrice right);
 constexpr inline TotalPrice operator+(LinePrice left, TotalPrice right);
-constexpr inline TotalPrice &operator+=(TotalPrice &left, LinePrice right);
+constexpr inline TotalPrice& operator+=(TotalPrice& left, LinePrice right);
 } // namespace phil
 
 #include "normalclass-impl.hpp"

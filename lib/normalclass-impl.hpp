@@ -11,23 +11,23 @@ constexpr inline Quantity::Quantity(unsigned underlying) noexcept
     : underlying_(underlying) {}
 constexpr inline Quantity::operator unsigned() noexcept { return underlying_; }
 
-inline Quantity &Quantity::operator++(this Quantity &self) {
+inline Quantity& Quantity::operator++(this Quantity& self) {
   ++self.underlying_;
   return self;
 }
 
-inline Quantity Quantity::operator++(this Quantity &self, int) {
+inline Quantity Quantity::operator++(this Quantity& self, int) {
   auto res = self;
   ++self;
   return res;
 }
 
-inline Quantity &Quantity::operator--(this Quantity &self) {
+inline Quantity& Quantity::operator--(this Quantity& self) {
   --self.underlying_;
   return self;
 }
 
-inline Quantity Quantity::operator--(this Quantity &self, int) {
+inline Quantity Quantity::operator--(this Quantity& self, int) {
   auto res = self;
   --self;
   return res;
@@ -73,7 +73,7 @@ constexpr inline TotalPrice operator+(LinePrice left, TotalPrice right) {
   return TotalPrice{unsigned{left} + unsigned{right}};
 }
 
-constexpr inline TotalPrice &operator+=(TotalPrice &left, LinePrice right) {
+constexpr inline TotalPrice& operator+=(TotalPrice& left, LinePrice right) {
   left = TotalPrice{unsigned{left} + unsigned{right}};
   return left;
 }
