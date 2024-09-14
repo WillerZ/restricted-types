@@ -6,6 +6,8 @@ set (AllTests
     PriceFromLinePriceNoImplicit.cpp
     PriceFromQuantityNoExplicit.cpp
     PriceFromQuantityNoImplicit.cpp
+    DecrementAffectsTheCorrectObjects.cpp
+    IncrementAffectsTheCorrectObjects.cpp
 )
 create_test_sourcelist (AliasTestList AliasTests.cpp ${AllTests})
 create_test_sourcelist (EnumClassTestList EnumClassTests.cpp ${AllTests})

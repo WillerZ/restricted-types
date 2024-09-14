@@ -9,33 +9,37 @@ struct Price;
 struct LinePrice;
 struct TotalPrice;
 
-struct CustomerId : mixins::Value<CustomerId, unsigned> {
-  using mixins::Value<CustomerId, unsigned>::Value;
+struct CustomerId : mixins::Value<unsigned> {
+  using base_t = mixins::Value<unsigned>;
+  using base_t::Value;
 };
 
-struct Quantity : mixins::Value<Quantity, unsigned>,
-                  mixins::Multiply<Quantity, unsigned, LinePrice, Price>,
-                  mixins::Increment<Quantity, unsigned>,
-                  mixins::Decrement<Quantity, unsigned> {
-  using mixins::Value<Quantity, unsigned>::Value;
+struct Quantity : mixins::Value<unsigned>,
+                  mixins::Multiply<LinePrice, Price>,
+                  mixins::Increment,
+                  mixins::Decrement {
+  using base_t = mixins::Value<unsigned>;
+  using base_t::Value;
 };
 
-struct Price : mixins::Value<Price, unsigned>,
-               mixins::Multiply<Price, unsigned, LinePrice, Quantity> {
-  using mixins::Value<Price, unsigned>::Value;
+struct Price : mixins::Value<unsigned>, mixins::Multiply<LinePrice, Quantity> {
+  using base_t = mixins::Value<unsigned>;
+  using base_t::Value;
 };
 
-struct LinePrice : mixins::Value<LinePrice, unsigned>,
-                   mixins::Add<LinePrice, unsigned, TotalPrice, LinePrice>,
-                   mixins::Add<LinePrice, unsigned, TotalPrice, TotalPrice>,
-                   mixins::ExplicitlyConvertible<LinePrice, unsigned, Price> {
-  using mixins::Value<LinePrice, unsigned>::Value;
+struct LinePrice : mixins::Value<unsigned>,
+                   mixins::Add<TotalPrice, LinePrice>,
+                   mixins::Add<TotalPrice, TotalPrice>,
+                   mixins::ExplicitlyConvertible<Price> {
+  using base_t = mixins::Value<unsigned>;
+  using base_t::Value;
 };
 
-struct TotalPrice : mixins::Value<TotalPrice, unsigned>,
-                    mixins::Add<TotalPrice, unsigned, TotalPrice, LinePrice>,
-                   mixins::ExplicitlyConvertible<TotalPrice, unsigned, Price>  {
-  using mixins::Value<TotalPrice, unsigned>::Value;
+struct TotalPrice : mixins::Value<unsigned>,
+                    mixins::Add<TotalPrice, LinePrice>,
+                    mixins::ExplicitlyConvertible<Price> {
+  using base_t = mixins::Value<unsigned>;
+  using base_t::Value;
 };
 
 } // namespace phil

@@ -3,86 +3,82 @@
 #include <type_traits>
 
 namespace phil::mixins {
-template <typename CRTP, typename Underlying> struct Value {
+template <typename Result, typename Other> struct Multiply;
+template <typename Result, typename Other> struct Add;
+template <typename To> struct ExplicitlyConvertible;
+struct Increment;
+struct Decrement;
+
+template <typename Underlying> struct Value {
+  using value_t = Underlying;
   constexpr Value() noexcept = default;
-  constexpr explicit Value(Underlying underlying) noexcept
-      : underlying_(underlying) {}
-  constexpr explicit operator Underlying() noexcept { return underlying_; }
+  constexpr explicit Value(value_t value) noexcept : value_(value) {}
+  constexpr explicit operator value_t() noexcept { return value_; }
 
 private:
-  Underlying underlying_{};
+  template <typename Result, typename Other> friend struct Add;
+  template <typename Result, typename Other> friend struct Multiply;
+  template <typename To> friend struct ExplicitlyConvertible;
+  friend struct Increment;
+  friend struct Decrement;
+
+  value_t value_{};
 };
 
-template <typename CRTP, typename Underlying, typename Result, typename Other>
-struct SelfMultiply {};
+template <typename Result, typename Other>
+struct Multiply {
+  constexpr Result operator*(this auto const& self, Other other) noexcept {
+    return Result{self.base_t::value_ * other.base_t::value_};
+  }
 
-template <typename CRTP, typename Underlying, typename Other>
-struct SelfMultiply<CRTP, Underlying, CRTP, Other> {
-  constexpr CRTP& operator*=(this auto& self, Other other) noexcept {
-    self = self * other;
+  constexpr Result& operator*=(this auto& self, Other other) noexcept {
+    self.base_t::value_ *= other.base_t::value_;
     return self;
   }
 };
 
-template <typename CRTP, typename Underlying, typename Result, typename Other>
-struct Multiply : SelfMultiply<typename CRTP, typename Underlying,
-                               typename Result, typename Other> {
-  constexpr Result operator*(Other other) const noexcept {
-    return Result{Underlying{*this} * Underlying{other}};
+template <typename Result, typename Other> struct Add {
+  constexpr Result operator+(this auto const& self, Other other) noexcept {
+    return Result{self.base_t::value_ + other.base_t::value_};
   }
-};
 
-template <typename CRTP, typename Underlying, typename Result, typename Other>
-struct SelfAdd {};
-
-template <typename CRTP, typename Underlying, typename Other>
-struct SelfAdd<CRTP, Underlying, CRTP, Other> {
-  constexpr CRTP& operator+=(this auto& self, Other other) noexcept {
-    self = self + other;
+  constexpr Result& operator+=(this auto& self, Other other) noexcept {
+    self.base_t::value_ += other.base_t::value_;
     return self;
   }
 };
 
-template <typename CRTP, typename Underlying, typename Result, typename Other>
-struct Add : SelfAdd<typename CRTP, typename Underlying, typename Result,
-                     typename Other> {
-  constexpr Result operator+(Other other) const noexcept {
-    return Result{Underlying{*this} + Underlying{other}};
-  }
-};
-
-template <typename CRTP, typename Underlying>
 struct Increment {
-  constexpr CRTP& operator++(this CRTP& self) noexcept {
-    self = CRTP{Underlying{self} + 1};
+  constexpr auto operator++(this auto& self) noexcept -> decltype(self) {
+    ++self.base_t::value_;
     return self;
   }
 
-  constexpr CRTP operator++(this CRTP& self, int) noexcept {
-    CRTP result = self;
+  constexpr auto operator++(this auto& self, int) noexcept
+      -> std::remove_reference_t<decltype(self)> {
+    auto result = self;
     ++self;
     return result;
   }
 };
 
-template <typename CRTP, typename Underlying>
 struct Decrement {
-  constexpr CRTP& operator--(this CRTP& self) noexcept {
-    self = CRTP{Underlying{self} - 1};
+  constexpr auto operator--(this auto& self) noexcept -> decltype(self) {
+    --self.base_t::value_;
     return self;
   }
 
-  constexpr CRTP operator--(this CRTP& self, int) noexcept {
-    CRTP result = self;
+  constexpr auto operator--(this auto& self, int) noexcept
+      -> std::remove_reference_t<decltype(self)> {
+    auto result = self;
     --self;
     return result;
   }
 };
 
-template <typename CRTP, typename Underlying, typename To>
-struct ExplicitlyConvertible {
-  constexpr explicit operator To() noexcept {
-    return To{Underlying{*this}};
+template <typename To> struct ExplicitlyConvertible {
+  constexpr explicit operator To(this auto const& self) noexcept {
+    return To{self.base_t::value_};
   }
 };
 } // namespace phil::mixins
