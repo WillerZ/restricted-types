@@ -20,7 +20,6 @@ struct Quantity {
   constexpr Quantity() noexcept = default;
   constexpr explicit Quantity(unsigned underlying) noexcept;
   constexpr explicit operator unsigned() noexcept;
-  operator Price() = delete;
   Quantity& operator++(this Quantity& self);
   Quantity operator++(this Quantity& self, int);
   Quantity& operator--(this Quantity& self);

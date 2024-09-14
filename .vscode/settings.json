@@ -3,6 +3,7 @@
         "cstddef": "cpp",
         "cstdint": "cpp",
         "type_traits": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "concepts": "cpp"
     }
 }
