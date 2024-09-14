@@ -3,7 +3,7 @@
 #include TEST_TYPES
 
 int DecrementAffectsTheCorrectObjects(int, char** const) {
-  phil::Quantity qty;
+  phil::Quantity qty{};
   auto&& qty2 = ++qty;
   auto&& qty3 = qty++;
   if (&qty != &qty2) {
