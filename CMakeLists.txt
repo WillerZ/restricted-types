@@ -9,5 +9,5 @@ project(RestrictedTypes C CXX)
 
 include(CTest)
 
-# add_subdirectory(lib)
+# add_subdirectory(failures)
 add_subdirectory(test)
