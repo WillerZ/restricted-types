@@ -1,6 +1,7 @@
 # create the testing file and list of tests
 set (AllFailures
     AccumulatePriceToTotalPrice.cpp
+    CompoundAddition.cpp
 )
 create_test_sourcelist (AliasFailureList AliasFailures.cpp ${AllFailures})
 create_test_sourcelist (EnumClassFailureList EnumClassFailures.cpp ${AllFailures})
