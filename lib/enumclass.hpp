@@ -18,6 +18,16 @@ constexpr inline Quantity operator++(Quantity& qty, int);
 constexpr inline Quantity& operator--(Quantity& qty);
 constexpr inline Quantity operator--(Quantity& qty, int);
 
+enum class NoCompoundAdditionSource : unsigned {};
+enum class YesCompoundAdditionSource : unsigned {};
+enum class CompoundAdditionTarget : unsigned {};
+
+constexpr inline CompoundAdditionTarget&
+operator+=(CompoundAdditionTarget& left,
+           NoCompoundAdditionSource right) = delete;
+constexpr inline CompoundAdditionTarget&
+operator+=(CompoundAdditionTarget& left, YesCompoundAdditionSource right);
+
 // First test failure might be fixable if something like this were legal:
 //
 //     explicit operator Price(Quantity lp) = delete;

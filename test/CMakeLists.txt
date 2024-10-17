@@ -8,6 +8,8 @@ set (AllTests
     PriceFromQuantityNoImplicit.cpp
     DecrementAffectsTheCorrectObjects.cpp
     IncrementAffectsTheCorrectObjects.cpp
+    SelectiveCompoundAdditionNo.cpp
+    SelectiveCompoundAdditionYes.cpp
 )
 create_test_sourcelist (AliasTestList AliasTests.cpp ${AllTests})
 create_test_sourcelist (EnumClassTestList EnumClassTests.cpp ${AllTests})
@@ -56,4 +58,4 @@ foreach (test ${AllTests})
 
   add_test (NAME "MixinClass_${TName}" COMMAND MixinClassTests ${TName})
   set_property(TEST "MixinClass_${TName}" PROPERTY LABELS MixinClass)
-  endforeach ()
+endforeach ()

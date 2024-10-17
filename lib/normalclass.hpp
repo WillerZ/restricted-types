@@ -64,6 +64,38 @@ constexpr inline TotalPrice operator+(LinePrice left, LinePrice right);
 constexpr inline TotalPrice operator+(TotalPrice left, LinePrice right);
 constexpr inline TotalPrice operator+(LinePrice left, TotalPrice right);
 constexpr inline TotalPrice& operator+=(TotalPrice& left, LinePrice right);
+
+struct NoCompoundAdditionSource {
+  constexpr NoCompoundAdditionSource() noexcept = default;
+  constexpr explicit NoCompoundAdditionSource(unsigned underlying) noexcept;
+  constexpr explicit operator unsigned() noexcept;
+
+private:
+  unsigned underlying_{0};
+};
+struct YesCompoundAdditionSource {
+  constexpr YesCompoundAdditionSource() noexcept = default;
+  constexpr explicit YesCompoundAdditionSource(unsigned underlying) noexcept;
+  constexpr explicit operator unsigned() noexcept;
+  constexpr /* implicit */ operator NoCompoundAdditionSource() noexcept;
+
+private:
+  unsigned underlying_{0};
+};
+struct CompoundAdditionTarget {
+  constexpr CompoundAdditionTarget() noexcept = default;
+  constexpr explicit CompoundAdditionTarget(unsigned underlying) noexcept;
+  constexpr explicit operator unsigned() noexcept;
+
+private:
+  unsigned underlying_{0};
+};
+
+constexpr inline CompoundAdditionTarget&
+operator+=(CompoundAdditionTarget& left,
+           NoCompoundAdditionSource right) = delete;
+constexpr inline CompoundAdditionTarget&
+operator+=(CompoundAdditionTarget& left, YesCompoundAdditionSource right);
 } // namespace phil
 
 #include "normalclass-impl.hpp"

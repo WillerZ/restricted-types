@@ -6,6 +6,7 @@ namespace phil::mixins {
 template <typename Result, typename Other> struct Multiply;
 template <typename Result, typename Other> struct Add;
 template <typename To> struct ExplicitlyConvertible;
+template <typename To> struct ImplicitlyConvertible;
 struct Increment;
 struct Decrement;
 
@@ -13,20 +14,20 @@ template <typename Underlying> struct Value {
   using value_t = Underlying;
   constexpr Value() noexcept = default;
   constexpr explicit Value(value_t value) noexcept : value_(value) {}
-  constexpr explicit operator value_t() noexcept { return value_; }
+  constexpr explicit operator value_t() const noexcept { return value_; }
 
 private:
   template <typename Result, typename Other> friend struct Add;
   template <typename Result, typename Other> friend struct Multiply;
   template <typename To> friend struct ExplicitlyConvertible;
+  template <typename To> friend struct ImplicitlyConvertible;
   friend struct Increment;
   friend struct Decrement;
 
   value_t value_{};
 };
 
-template <typename Result, typename Other>
-struct Multiply {
+template <typename Result, typename Other> struct Multiply {
   constexpr Result operator*(this auto const& self, Other other) noexcept {
     return Result{self.base_t::value_ * other.base_t::value_};
   }
@@ -78,6 +79,12 @@ struct Decrement {
 
 template <typename To> struct ExplicitlyConvertible {
   constexpr explicit operator To(this auto const& self) noexcept {
+    return To{self.base_t::value_};
+  }
+};
+
+template <typename To> struct ImplicitlyConvertible {
+  constexpr /* implicit */ operator To(this auto const& self) noexcept {
     return To{self.base_t::value_};
   }
 };
