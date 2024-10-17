@@ -73,6 +73,7 @@ struct NoCompoundAdditionSource {
 private:
   unsigned underlying_{0};
 };
+
 struct YesCompoundAdditionSource {
   constexpr YesCompoundAdditionSource() noexcept = default;
   constexpr explicit YesCompoundAdditionSource(unsigned underlying) noexcept;
@@ -82,6 +83,7 @@ struct YesCompoundAdditionSource {
 private:
   unsigned underlying_{0};
 };
+
 struct CompoundAdditionTarget {
   constexpr CompoundAdditionTarget() noexcept = default;
   constexpr explicit CompoundAdditionTarget(unsigned underlying) noexcept;
