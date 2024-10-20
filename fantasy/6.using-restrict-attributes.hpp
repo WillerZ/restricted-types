@@ -13,12 +13,12 @@ using CustomerId [[phil::permit(
     explicit operator unsigned();
   )]] = restrict unsigned;
 using Quantity [[phil::permit(
-    operator""_qty;
-    operator++();
-    operator++(int);
-    operator--();
-    operator--(int);
-    LinePrice operator*(Price);
+    operator ""_qty;
+    operator ++();
+    operator ++(int);
+    operator --();
+    operator --(int);
+    LinePrice operator *(Price);
   )]] = restrict unsigned;
 using Price [[phil::permit(
     Price();
@@ -31,16 +31,16 @@ using LinePrice [[phil::permit(
     explicit LinePrice(unsigned);
     explicit operator unsigned();
     explicit operator Price();
-    TotalPrice operator+(LinePrice);
-    TotalPrice operator+(TotalPrice);
+    TotalPrice operator +(LinePrice);
+    TotalPrice operator +(TotalPrice);
   )]] = restrict unsigned;
 using TotalPrice [[phil::permit(
     TotalPrice();
     explicit TotalPrice(unsigned);
     explicit operator unsigned();
     explicit operator Price();
-    TotalPrice operator+(LinePrice);
-    TotalPrice& operator+=(LinePrice);
+    TotalPrice operator +(LinePrice);
+    TotalPrice& operator +=(LinePrice);
   )]] = restrict unsigned;
 
 using NoCompoundAdditionSource [[phil::permit(
@@ -57,6 +57,6 @@ using CompoundAdditionTarget [[phil::permit(
     CompoundAdditionTarget();
     explicit CompoundAdditionTarget(unsigned);
     explicit operator unsigned();
-    CompoundAdditionTarget& operator+=(YesCompoundAdditionSource);
+    CompoundAdditionTarget& operator +=(YesCompoundAdditionSource);
   )]] = restrict unsigned;
 } // namespace phil
