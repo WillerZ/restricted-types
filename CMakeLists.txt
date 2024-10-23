@@ -11,3 +11,4 @@ include(CTest)
 
 # add_subdirectory(failures)
 add_subdirectory(test)
+add_subdirectory(demo)

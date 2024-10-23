@@ -3,6 +3,7 @@
 namespace phil {
 struct CustomerId;
 struct Quantity;
+struct Count;
 struct Price;
 struct LinePrice;
 struct TotalPrice;
@@ -24,6 +25,16 @@ struct Quantity {
   Quantity operator++(this Quantity& self, int);
   Quantity& operator--(this Quantity& self);
   Quantity operator--(this Quantity& self, int);
+  constexpr Count operator/(this Quantity& self, Quantity const& other) noexcept;
+
+private:
+  unsigned underlying_{0};
+};
+
+struct Count {
+  constexpr Count() noexcept = default;
+  constexpr explicit Count(unsigned underlying) noexcept;
+  constexpr explicit operator unsigned() noexcept;
 
 private:
   unsigned underlying_{0};

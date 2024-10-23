@@ -5,6 +5,7 @@
 namespace phil {
 struct CustomerId;
 struct Quantity;
+struct Count;
 struct Price;
 struct LinePrice;
 struct TotalPrice;
@@ -16,8 +17,14 @@ struct CustomerId : mixins::Value<unsigned> {
 
 struct Quantity : mixins::Value<unsigned>,
                   mixins::Multiply<LinePrice, Price>,
+                  mixins::Divide<Count, Quantity>,
                   mixins::Increment,
                   mixins::Decrement {
+  using base_t = mixins::Value<unsigned>;
+  using base_t::Value;
+};
+
+struct Count : mixins::Value<unsigned> {
   using base_t = mixins::Value<unsigned>;
   using base_t::Value;
 };

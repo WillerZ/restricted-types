@@ -4,6 +4,7 @@
 
 namespace phil::mixins {
 template <typename Result, typename Other> struct Multiply;
+template <typename Result, typename Other> struct Divide;
 template <typename Result, typename Other> struct Add;
 template <typename To> struct ExplicitlyConvertible;
 template <typename To> struct ImplicitlyConvertible;
@@ -19,6 +20,7 @@ template <typename Underlying> struct Value {
 private:
   template <typename Result, typename Other> friend struct Add;
   template <typename Result, typename Other> friend struct Multiply;
+  template <typename Result, typename Other> friend struct Divide;
   template <typename To> friend struct ExplicitlyConvertible;
   template <typename To> friend struct ImplicitlyConvertible;
   friend struct Increment;
@@ -34,6 +36,17 @@ template <typename Result, typename Other> struct Multiply {
 
   constexpr Result& operator*=(this auto& self, Other other) noexcept {
     self.base_t::value_ *= other.base_t::value_;
+    return self;
+  }
+};
+
+template <typename Result, typename Other> struct Divide {
+  constexpr Result operator/(this auto const& self, Other other) noexcept {
+    return Result{self.base_t::value_ / other.base_t::value_};
+  }
+
+  constexpr Result& operator/=(this auto& self, Other other) noexcept {
+    self.base_t::value_ /= other.base_t::value_;
     return self;
   }
 };

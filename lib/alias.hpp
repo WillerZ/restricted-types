@@ -3,6 +3,7 @@
 namespace phil {
 using CustomerId = unsigned;
 using Quantity = unsigned;
+using Count = unsigned;
 using Price = unsigned;
 using LinePrice = unsigned;
 using TotalPrice = unsigned;

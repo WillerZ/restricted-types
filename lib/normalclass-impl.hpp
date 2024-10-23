@@ -7,6 +7,12 @@ constexpr inline CustomerId::operator unsigned() noexcept {
   return underlying_;
 }
 
+constexpr inline Count::Count(unsigned underlying) noexcept
+    : underlying_(underlying) {}
+constexpr inline Count::operator unsigned() noexcept {
+  return underlying_;
+}
+
 constexpr inline Quantity::Quantity(unsigned underlying) noexcept
     : underlying_(underlying) {}
 constexpr inline Quantity::operator unsigned() noexcept { return underlying_; }
@@ -31,6 +37,10 @@ inline Quantity Quantity::operator--(this Quantity& self, int) {
   auto res = self;
   --self;
   return res;
+}
+
+constexpr inline Count Quantity::operator/(this Quantity& self, Quantity const& other) noexcept {
+  return Count{self.underlying_ / other.underlying_};
 }
 
 constexpr inline Price::Price(unsigned underlying) noexcept

@@ -49,6 +49,11 @@ constexpr inline Quantity operator--(Quantity& qty, int) {
   return res;
 }
 
+constexpr inline Count operator/(Quantity left, Quantity right) {
+  return Count{static_cast<unsigned>(left) / static_cast<unsigned>(right)};
+}
+
+
 // First test failure might be fixable if something like this were legal:
 //
 //     explicit operator Price(Quantity lp) = delete;

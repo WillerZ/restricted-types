@@ -3,6 +3,7 @@
 namespace phil {
 enum class CustomerId : unsigned {};
 enum class Quantity : unsigned {};
+enum class Count : unsigned {};
 enum class Price : unsigned {};
 enum class LinePrice : unsigned {};
 enum class TotalPrice : unsigned {};
@@ -17,6 +18,7 @@ constexpr inline Quantity& operator++(Quantity& qty);
 constexpr inline Quantity operator++(Quantity& qty, int);
 constexpr inline Quantity& operator--(Quantity& qty);
 constexpr inline Quantity operator--(Quantity& qty, int);
+constexpr inline Count operator/(Quantity left, Quantity right);
 
 enum class NoCompoundAdditionSource : unsigned {};
 enum class YesCompoundAdditionSource : unsigned {};
