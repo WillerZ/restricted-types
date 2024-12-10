@@ -1,0 +1,7 @@
+add_executable (8.cidea 8.cidea.c)
+add_executable (8.cidea.fail1 8.cidea.fail1.c)
+add_executable (8.cidea.fail2 8.cidea.fail2.c)
+add_executable (8.cidea.fail3 8.cidea.fail3.c)
+add_executable (8.cidea.fail4 8.cidea.fail4.c)
+add_executable (8.cidea.fail5 8.cidea.fail5.c)
+add_executable (8.cidea.fail6 8.cidea.fail6.c)
